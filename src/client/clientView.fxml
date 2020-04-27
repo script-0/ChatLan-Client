@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="492.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="client.ClientViewController">
+   <children>
+      <ScrollPane layoutX="5.0" layoutY="8.0" style="-fx-background-radius: 0.8em; -fx-border-radius: 0.8em;">
+         <content>
+            <VBox fx:id="messages" alignment="TOP_CENTER" prefHeight="330.0" prefWidth="482.0" style="-fx-background-color: #DEDEDE; -fx-background-radius: 0.8em; -fx-border-radius: 0.8em;">
+               <children>
+                  <Label fx:id="title" alignment="CENTER" prefHeight="20.0" prefWidth="457.0" text="Title">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <TextField fx:id="textField" layoutX="14.0" layoutY="354.0" prefHeight="39.0" prefWidth="383.0" />
+      <JFXButton fx:id="send" layoutX="412.0" layoutY="357.0" onAction="#send" style="-fx-border-color: #16A2A0; -fx-border-radius: 0.8em; -fx-background-radius: 0.9em;" text="Send &gt;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
