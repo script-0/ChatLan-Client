@@ -6,10 +6,13 @@
 package client;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSpinner;
+import com.jfoenix.controls.JFXTextField;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,22 +33,40 @@ import javafx.scene.layout.VBox;
  */
 public class ClientViewController implements Initializable {
     
-     @FXML
-    public VBox messages;
+      @FXML
+    private VBox messages;
 
     @FXML
-    public Label title;
+    private Label title;
 
     @FXML
-    public TextField textField;
+    private TextField textField;
 
     @FXML
-    public JFXButton send;
+    private JFXButton send;
 
-    public static VBox box;
+    @FXML
+    private JFXTextField ip;
+
+    @FXML
+    private JFXTextField port;
+
+    @FXML
+    private JFXButton connect;
+
+    @FXML
+    private JFXSpinner spinner;   
     
-     BufferedReader in;
-     PrintWriter out;
+    ReadStream service;
+    
+    ExecutorService executorService;
+    
+    InetAddress address;
+    Socket s;
+    
+    BufferedReader in;
+    PrintWriter out;
+    
     /**
      * Initializes the controller class.
      */
@@ -54,18 +75,38 @@ public class ClientViewController implements Initializable {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             send.setDisable(newValue.isEmpty());
         });
-        box = messages;
+        spinner.setVisible(false);
+    }    
+    
+    public void addText(String t){
+         messages.getChildren().add(new Label(t));
+    }
+    
+    @FXML
+    void connect() {
          try {
-                Socket s = new Socket("localhost",4321);             
+                spinner.setVisible(true);
+                connect.setText("connecting");
+                connect.setDisable(true);
+                 address = InetAddress.getByName(ip.getText().replace(" ",""));
+                s = new Socket(address,Integer.valueOf(port.getText()));             
                 in = new BufferedReader(new InputStreamReader(s.getInputStream()));
                 out = new PrintWriter(s.getOutputStream(),true);
-               title.setText(in.readLine());
-               // messages.getChildren().add(new Label(in.readLine()));
+                title.setText(in.readLine());
                 
-                ReadStream service = new ReadStream(s,messages,in,this);   
-                service.setOnCancelled((event) -> {
-                    service.cancel();
+                spinner.setVisible(false);
+                connect.setText("Disconnect");
+                connect.setDisable(false);
+                
+                connect.setOnAction((event) -> {
+                    disconnect();
                 });
+                
+                service = new ReadStream(s,in,this); 
+                
+               /* service.setOnCancelled((event) -> {
+                    service.cancel();
+                });*/
                 
                 service.setOnFailed((event) -> {
                     service.cancel();
@@ -75,17 +116,37 @@ public class ClientViewController implements Initializable {
                     service.cancel();
                 });
                 
-                ExecutorService executorService = Executors.newFixedThreadPool(1);
+                executorService = Executors.newFixedThreadPool(1);
                 executorService.execute(service);
                 executorService.shutdown();
          } catch (IOException ex) {
+             spinner.setVisible(false);
+             connect.setText("Disconnect");
+             connect.setDisable(false);
              Logger.getLogger(ClientViewController.class.getName()).log(Level.SEVERE, null, ex);
          }
-    }    
-    
-    public void addText(String t){
-         messages.getChildren().add(new Label(t));
     }
+
+    void disconnect(){
+          try {
+              service.s.close();
+              service.s.shutdownInput();
+              service.s.shutdownOutput();
+          } catch (IOException ex) {
+              System.out.println("Error occured during Disconnecting...");
+          }finally{
+              service.cancel();
+              executorService.shutdownNow();
+          }
+          
+          connect.setText("connect");
+                connect.setDisable(false);
+                
+                connect.setOnAction((event) -> {
+                    connect();
+                });
+    }
+    
     
      @FXML
     void send() {
