@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox alignment="CENTER_LEFT" stylesheets="@../res/css/newclient.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.NewClientController">
+   <children>
+      <ImageView fx:id="image" fitHeight="37.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../res/img/user.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="name" styleClass="default" text="Ndema Emmanuel">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</HBox>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="504.0" prefWidth="556.0" stylesheets="@../res/css/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.MessagesViewController">
+   <children>
+      <ScrollPane fx:id="messagesPane" layoutX="361.0" prefHeight="493.0" prefWidth="195.0" style="-fx-border-color: #4359ab; -fx-border-width: 0px 0px 0px 1px;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <VBox fx:id="userBox" alignment="TOP_CENTER" prefWidth="195.0" spacing="5.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" style="-fx-background-color: derive(#4359ab,100%);">
+                     <children>
+                        <ImageView fitHeight="37.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../res/img/user.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="user" prefHeight="34.0" prefWidth="91.0" styleClass="default" text="Isaac Ndema">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="2.0" right="3.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <ScrollPane layoutX="-1.0" layoutY="-1.0" prefHeight="452.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="195.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <VBox fx:id="messagesBox" alignment="TOP_CENTER" prefWidth="359.0" spacing="3.0">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="title" alignment="CENTER" contentDisplay="RIGHT" text="Emmanuel Ndema est connecté " textAlignment="CENTER" textFill="#4359ab" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <graphic>
+                              <Label fx:id="date" alignment="TOP_CENTER" text="01:25 PM" />
+                           </graphic>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <TextField fx:id="message" layoutX="34.0" layoutY="462.0" prefHeight="35.0" prefWidth="275.0" promptText="Enter message here" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="247.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <ImageView id="send" fx:id="send" fitHeight="31.0" fitWidth="29.0" layoutX="320.0" layoutY="465.0" onMouseClicked="#send" pickOnBounds="true" preserveRatio="true" rotate="90.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="207.0">
+         <image>
+            <Image url="@../res/img/send1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="attach" fitHeight="31.0" fitWidth="29.0" layoutX="3.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0">
+         <image>
+            <Image url="@../res/img/attach.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

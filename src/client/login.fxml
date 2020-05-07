@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="252.0" prefWidth="489.0" stylesheets="@../res/css/style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="client.LoginController">
+   <children>
+      <Label layoutX="162.0" layoutY="-1.0" prefHeight="31.0" prefWidth="149.0" styleClass="default" text="Server Paramaters">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="ip" alignment="CENTER" labelFloat="true" layoutX="146.0" layoutY="47.0" prefHeight="30.0" prefWidth="177.0" promptText="IP" styleClass="field">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="port" alignment="CENTER" labelFloat="true" layoutX="144.0" layoutY="105.0" prefHeight="30.0" prefWidth="177.0" promptText="Port" styleClass="default">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="username" alignment="CENTER" labelFloat="true" layoutX="148.0" layoutY="161.0" prefHeight="30.0" prefWidth="177.0" promptText="Username" styleClass="default">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton layoutX="58.0" layoutY="210.0" prefHeight="25.0" prefWidth="168.0" styleClass="default" text="I'm using Proxy server" textFill="#4359ab">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="connect" contentDisplay="RIGHT" layoutX="323.0" layoutY="203.0" onAction="#connect" prefHeight="40.0" prefWidth="113.0" styleClass="connect" text="Connect">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="20.0">
+               <image>
+                  <Image url="@../res/img/send.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="104.0" layoutY="47.0">
+         <image>
+            <Image url="@../res/img/ip.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="105.0" layoutY="108.0">
+         <image>
+            <Image url="@../res/img/port.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="105.0" layoutY="161.0">
+         <image>
+            <Image url="@../res/img/user.png" />
+         </image>
+      </ImageView>
+      <Separator layoutX="297.0" layoutY="24.0" prefHeight="0.0" prefWidth="149.0" style="-fx-background-color: #4359ab;" />
+      <Separator layoutX="27.0" layoutY="24.0" prefHeight="0.0" prefWidth="149.0" style="-fx-background-color: #4359ab;" />
+      <JFXSpinner fx:id="spinner" layoutX="347.0" layoutY="84.0" prefHeight="86.0" prefWidth="89.0" />
+   </children>
+</AnchorPane>

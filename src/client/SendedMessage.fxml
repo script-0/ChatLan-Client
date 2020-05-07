@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox alignment="BOTTOM_RIGHT" stylesheets="@../res/css/sendedmessage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.SendedMessageController">
+   <children>
+      <VBox maxWidth="345.0" spacing="1.0" style="-fx-border-color: derive(#4359ab,100%); -fx-border-radius: 0.6em 0.9em 0.9em 0em;">
+         <children>
+            <HBox>
+               <children>
+                  <Label fx:id="text" text="sending text" textFill="#0015ff" wrapText="true">
+                     <graphic>
+                        <Label fx:id="date" text="01:30 PM" />
+                     </graphic>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</HBox>

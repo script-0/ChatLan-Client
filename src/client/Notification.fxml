@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox alignment="CENTER" stylesheets="@../res/css/notification.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.NotificationController">
+   <children>
+      <Label fx:id="text" alignment="CENTER" contentDisplay="RIGHT" text="Emmanuel Ndema est connecté " textAlignment="CENTER" textFill="#4359ab" wrapText="true">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <graphic>
+            <Label fx:id="time" alignment="TOP_CENTER" text="01:25 PM" />
+         </graphic>
+      </Label>
+   </children>
+</HBox>
