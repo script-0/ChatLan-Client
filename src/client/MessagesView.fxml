@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="504.0" prefWidth="556.0" stylesheets="@../res/css/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.MessagesViewController">
    <children>
-      <ScrollPane fx:id="messagesPane" layoutX="361.0" prefHeight="493.0" prefWidth="195.0" style="-fx-border-color: #4359ab; -fx-border-width: 0px 0px 0px 1px;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fx:id="messagesPane" fitToWidth="true" layoutX="361.0" prefHeight="493.0" prefWidth="195.0" style="-fx-border-color: #4359ab; -fx-border-width: 0px 0px 0px 1px;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
             <VBox fx:id="userBox" alignment="TOP_CENTER" prefWidth="195.0" spacing="5.0">
                <children>
@@ -44,9 +44,9 @@
             </VBox>
          </content>
       </ScrollPane>
-      <ScrollPane layoutX="-1.0" layoutY="-1.0" prefHeight="452.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="195.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fitToWidth="true" layoutX="-1.0" layoutY="-1.0" prefHeight="452.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="195.0" AnchorPane.topAnchor="0.0">
          <content>
-            <VBox fx:id="messagesBox" alignment="TOP_CENTER" prefWidth="359.0" spacing="3.0">
+            <VBox fx:id="messagesBox" alignment="TOP_CENTER" spacing="3.0">
                <children>
                   <HBox alignment="CENTER">
                      <children>
@@ -74,7 +74,7 @@
             <Image url="@../res/img/send1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="attach" fitHeight="31.0" fitWidth="29.0" layoutX="3.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0">
+      <ImageView fx:id="attach" fitHeight="31.0" fitWidth="29.0" layoutX="3.0" layoutY="465.0" onMouseClicked="#sendFile" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0">
          <image>
             <Image url="@../res/img/attach.png" />
          </image>

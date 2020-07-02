@@ -5,16 +5,16 @@
  */
 package client;
 
-import java.io.BufferedReader;
+import client.model.Message;
+import client.model.MyFile;
+import client.model.ReadStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,13 +23,18 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane; 
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -73,12 +78,13 @@ public class MessagesViewController implements Initializable {
     
     InetAddress address;
     Socket s;
+    ObjectOutputStream out;
     
-    BufferedReader in;
-    PrintWriter out;
-    
+    public String username;
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -86,27 +92,20 @@ public class MessagesViewController implements Initializable {
        message.textProperty().addListener((observable, oldValue, newValue) -> {
             send.setDisable(newValue.isEmpty());
         });
-     /*  messagesPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-          messagesBox.setPrefWidth(newValue.doubleValue()+200); 
-       });
-       
-       messagesPane.heightProperty().addListener((observable, oldValue, newValue) -> {
-          messagesBox.setPrefHeight(newValue.doubleValue()-50); 
-       });*/
     }    
     
-    public void setParameters(Socket s, String user,String title, BufferedReader b){
-        try {
+    public void setParameters(Socket s, String user, ObjectOutputStream o){
             this.s =s;
             this.title.setText(user+" vous etes connecté");
             this.user.setText(user);
+            username = user;
             System.out.println(title);
-            this.date.setText(getTime());
+            this.date.setText(Message.getTime());
             
-            in = b;//new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintWriter(s.getOutputStream(),true);
+            out = o;
             
-           service = new ReadStream(s,in,this);
+            
+           service = new ReadStream(s,this);
             
             service.setOnCancelled((event) -> {
                 service.cancel();
@@ -123,9 +122,6 @@ public class MessagesViewController implements Initializable {
             executorService = Executors.newFixedThreadPool(1);
             executorService.execute(service);
             executorService.shutdown();
-        } catch (IOException ex) {
-            Logger.getLogger(MessagesViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 }
 
     void disconnect(){
@@ -136,19 +132,31 @@ public class MessagesViewController implements Initializable {
 */
     }
     
-     public void addMessage(String u, String t){
+    public void addMessage(String u, String t,String time){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/ReceivedMessage.fxml"));
             Parent root = loader.load();
             ReceivedMessageController con = loader.getController();
-            con.setText(u,t,getTime());
+            con.setText(u,t,time);
             messagesBox.getChildren().add(root);
         } catch (IOException ex) {
             Logger.getLogger(MessagesViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
      
-      public void addUser(String u){
+    public void addFile(MyFile f, String u ,String time){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/ReceivedFile.fxml"));
+            Parent root = loader.load();
+            ReceivedFileController con = loader.getController();
+            con.setParameters(f,u,time);
+            messagesBox.getChildren().add(root);
+        } catch (IOException ex) {
+            Logger.getLogger(MessagesViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void addUser(String u){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/NewClient.fxml"));
             Parent root = loader.load();
@@ -160,38 +168,83 @@ public class MessagesViewController implements Initializable {
         }
     }
     
-    public void addNotification(String t){
+    public void addNotification(String t,String time){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/Notification.fxml"));
             HBox root = (HBox)loader.load();
             NotificationController con = loader.getController();
-            con.setText(t,getTime());
+            con.setText(t,time);
             messagesBox.getChildren().add(root);
         } catch (IOException ex) {
             Logger.getLogger(MessagesViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
-    Calendar c = GregorianCalendar.getInstance();
     
-    public String getTime(){
-         c.setTime(new Date());
-         return ""+c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE);
+    public Message createMsg(String content){
+        Message msg = new Message(content,username);
+        
+        return msg;
     }
     
-     @FXML
+    @FXML
     void send() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/SendedMessage.fxml"));
             HBox root = (HBox)loader.load();
             SendedMessageController con = loader.getController();
-            con.setText(message.getText(),getTime());
+            con.setText(message.getText(),  Message.getTime());
             messagesBox.getChildren().add(root);
             messagesBox.autosize();
-            out.println(message.getText());
+            
+            out.writeObject(createMsg(message.getText()));
+            out.flush();
+            
             message.clear();
         } catch (IOException ex) {
             Logger.getLogger(MessagesViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @FXML
+    void sendFile(MouseEvent event){
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select File");
+        File file = chooser.showOpenDialog((Window)getStage(event));
+            if(file!=null && file.isFile()) {
+                try {
+                    MyFile f =  new MyFile(getContentFile(file),file.getName(),getExtension(file),username);
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/SendedFile.fxml"));
+                    HBox root = (HBox)loader.load();
+                    SendedFileController con = loader.getController();
+                    con.setParameters(file,Message.getTime());
+                    messagesBox.getChildren().add(root);
+                    messagesBox.autosize();
+                    
+                    out.writeObject(f);
+                    out.flush();
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(MessagesViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+    }
+    
+    public String getExtension(File file){
+        String name = file.getName();
+        return name.substring(name.lastIndexOf("."));
+    }
+    
+    
+    byte[] getContentFile(File f) throws IOException{
+        FileInputStream in = new FileInputStream(f);
+        byte b[] = new byte[in.available()];
+        in.read(b);
+        return b;
+    }
+    
+    public Stage getStage(MouseEvent e){
+        Node tmp = (Node)e.getSource();
+        return (Stage)tmp.getScene().getWindow();
+    }
+    
 }

@@ -8,9 +8,8 @@ package client;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -57,8 +56,7 @@ public class LoginController implements Initializable {
     }
     
     InetAddress address;
-    BufferedReader in;
-    PrintWriter out;
+    ObjectOutputStream out;
     
     public Stage getStage(ActionEvent e){
         return (Stage)((JFXButton)e.getSource()).getScene().getWindow();
@@ -76,13 +74,13 @@ public class LoginController implements Initializable {
                      System.out.println("Server reachable");
                  }
                 s = new Socket(address,Integer.valueOf(port.getText()));
-                in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                out = new PrintWriter(s.getOutputStream(),true);
-                out.println(username.getText());
+                out = new ObjectOutputStream(s.getOutputStream());
+                out.writeObject(username.getText());
+                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/MessagesView.fxml"));
                 Parent root = loader.load();
                 MessagesViewController con = loader.getController();
-                con.setParameters(s, username.getText(), in.readLine(),in);
+                con.setParameters(s, username.getText(),out);
                 Scene scene = new Scene(root);
 
                 getStage(e).setScene(scene);

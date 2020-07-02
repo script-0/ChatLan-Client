@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox alignment="BOTTOM_LEFT" stylesheets="@../res/css/receivedmessage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ReceivedMessageController">
    <children>
       <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
@@ -17,16 +16,16 @@
             <Image url="@../res/img/arrow.png" />
          </image>
       </ImageView>
-      <VBox maxWidth="345.0" spacing="1.0" style="-fx-background-color: derive(#4359ab,100%); -fx-background-radius: 0.6em 0.9em 0.9em 0em;">
+      <VBox spacing="1.0" style="-fx-background-color: derive(#4359ab,100%); -fx-background-radius: 0.6em 0.9em 0.9em 0em;">
          <children>
-            <HBox prefHeight="23.0" prefWidth="172.0">
+            <HBox>
                <children>
                   <ImageView fx:id="image" fitHeight="23.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../res/img/user.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="user" contentDisplay="RIGHT" text="Isaac Ndema" textFill="#0015ff">
+                  <Label fx:id="user" contentDisplay="RIGHT" text="Isaac" textFill="#0015ff">
                      <graphic>
                         <Label fx:id="date" text="01:30 PM" />
                      </graphic>
@@ -36,7 +35,7 @@
                   </Label>
                </children>
             </HBox>
-            <Separator prefHeight="3.0" prefWidth="157.0" style="-fx-background-color: #4359ab;" />
+            <Separator style="-fx-background-color: #4359ab;" />
             <Label fx:id="text" text="It's OK." wrapText="true">
                <font>
                   <Font size="14.0" />
