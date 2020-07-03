@@ -25,6 +25,9 @@ import javafx.scene.image.ImageView;
  */
 public class ReceivedFileController implements Initializable {
 
+
+    public final String FOLDER_NAME = "ChatLan";
+    
      @FXML
     private ImageView image;
 
@@ -63,10 +66,10 @@ public class ReceivedFileController implements Initializable {
             if(contentFile ==null){
                 File tmp =  new File(System.getProperty("user.home")+"/Downloads/POO-Socket-Impl");
                 tmp.mkdirs();
-                try (FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+"/Downloads/POO-Socket-Impl/"+this.content.getNameFile()+this.content.getType())) {
+                try (FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+"/Downloads/"+FOLDER_NAME+"/"+this.content.getNameFile())) {
                     fos.write(content.getContent());
                     fos.flush();
-                    contentFile = new File(System.getProperty("user.home")+"/Downloads/POO-Socket-Impl/"+this.content.getNameFile()+this.content.getType());
+                    contentFile = new File(System.getProperty("user.home")+"/Downloads/"+FOLDER_NAME+"/"+this.content.getNameFile());
                 }                
             }
             Desktop.getDesktop().open(contentFile);

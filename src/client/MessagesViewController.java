@@ -220,8 +220,16 @@ public class MessagesViewController implements Initializable {
                     messagesBox.getChildren().add(root);
                     messagesBox.autosize();
                     
-                    out.writeObject(f);
-                    out.flush();
+                    Thread t =  new Thread(()->{
+                        try {
+                            out.writeObject(f);
+                            out.flush();
+                        } catch (IOException ex) {
+                            System.out.println("Error on Thread Wrinting in output stream failed");
+                            Logger.getLogger(MessagesViewController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+                    t.start();
                     
                 } catch (IOException ex) {
                     Logger.getLogger(MessagesViewController.class.getName()).log(Level.SEVERE, null, ex);
