@@ -64,7 +64,7 @@ public class ReceivedFileController implements Initializable {
     public void openFile(){
         try {
             if(contentFile ==null){
-                File tmp =  new File(System.getProperty("user.home")+"/Downloads/POO-Socket-Impl");
+                File tmp =  new File(System.getProperty("user.home")+"/Downloads/"+FOLDER_NAME);
                 tmp.mkdirs();
                 try (FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+"/Downloads/"+FOLDER_NAME+"/"+this.content.getNameFile())) {
                     fos.write(content.getContent());
