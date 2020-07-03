@@ -1,2 +1,2 @@
-# POO2-Sockets
-Exposé POO2 : Implementation des Sockets en Java(Partie Client)
+# ChatLan
+Chat Over LAN : Implementation des Sockets en Java(Partie Client)
